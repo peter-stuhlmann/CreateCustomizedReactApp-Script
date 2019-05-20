@@ -7,9 +7,11 @@ COLORRESET='\033[0m'
 
 shopt -s extglob
 
+npm_pkgs=()
+
 syntax_note() {
   printf "Please specify the project name: 
-  ${CYAN}react-app ${GREEN}<project-name>\n"
+  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-t] [-b] [-m]\n"
 }
 
 install_modules() {
@@ -61,9 +63,22 @@ export default class App extends Component {
 if [[ $# -lt 1 ]]; then
   syntax_note
 else
-  project_dir=$1;
+  for i in $@; do
+    case $i in
+    -r) npm_pkgs+=('react-router-dom') ;;
+    -t) npm_pkgs+=('react-meta-tags') ;;
+    -b) npm_pkgs+=('react-bootstrap') ;;
+    -m) npm_pkgs+=('@material-ui/core') ;;
+    !(-)) project_dir=$i;
+    esac
+  done
 
   install_modules $project_dir
+
+  if [[ ${#npm_pkgs[@]} -gt 0 ]]; then
+    printf "\n${CYAN}Install ${GREEN}${npm_pkgs[@]}\n"
+    npm install ${npm_pkgs[@]} --prefix $project_dir/
+  fi
 
   customize_react_app
 

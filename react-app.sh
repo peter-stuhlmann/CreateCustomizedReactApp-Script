@@ -8,10 +8,11 @@ COLORRESET='\033[0m'
 shopt -s extglob
 
 npm_pkgs=()
+add_files=()
 
 syntax_note() {
   printf "Please specify the project name: 
-  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-t] [-b] [-m]\n"
+  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-t] [-b] [-m] [-l]\n"
 }
 
 install_modules() {
@@ -69,6 +70,7 @@ else
     -t) npm_pkgs+=('react-meta-tags') ;;
     -b) npm_pkgs+=('react-bootstrap') ;;
     -m) npm_pkgs+=('@material-ui/core') ;;
+    -l) add_files+=('LICENSE') ;;
     !(-)) project_dir=$i;
     esac
   done
@@ -78,6 +80,33 @@ else
   if [[ ${#npm_pkgs[@]} -gt 0 ]]; then
     printf "\n${CYAN}Install ${GREEN}${npm_pkgs[@]}\n"
     npm install ${npm_pkgs[@]} --prefix $project_dir/
+  fi
+
+  if [[ ${#add_files[@]} -gt 0 ]]; then
+    printf "\n${CYAN}Create ${GREEN}${#add_files[@]}${COLORRESET}\n"
+    touch $project_dir/${add_files[@]} 
+    echo 'MIT License
+
+Copyright (c) 2019 <your name>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.' >>$project_dir/LICENSE
+
   fi
 
   customize_react_app

@@ -42,10 +42,12 @@ customize_react_app() {
 
   echo 'import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.querySelector("#root"));' >>$project_dir/src/index.js
+ReactDOM.render(<App />, document.querySelector("#root"));
+
+serviceWorker.unregister();' >>$project_dir/src/index.js
 
   echo 'import React, { Component } from "react";
 import "../assets/scss/main.scss"

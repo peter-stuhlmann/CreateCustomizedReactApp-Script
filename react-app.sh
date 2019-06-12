@@ -120,7 +120,9 @@ SOFTWARE." >>$project_dir/LICENSE
   code $project_dir/
 
   cd $project_dir
-
+  
+  npm start
+  
   git init
   git add .
   git commit -m "Init React project" -m "Install modules:

@@ -77,21 +77,10 @@ else
 
   install_modules $project_dir
 
-  if [[ ${#npm_pkgs[@]} -gt 0 ]]; then
-    printf "\n${CYAN}Install ${GREEN}${npm_pkgs[@]}\n"
-    npm install ${npm_pkgs[@]} --prefix $project_dir/
-  fi
-
   customize_react_app
 
-  printf "\n${CYAN}Done!${COLORRESET}\n"
-
-  code $project_dir/
-
   cd $project_dir
-  
-  npm start
-  
+
   git init
   git add .
   git commit -m "Init React project" -m "Install modules:
@@ -105,6 +94,19 @@ Customize React App:
 
 Remove unneeded files:
 - Remove logo.svg from src/ and the logo import in index.js"
+
+  if [[ ${#npm_pkgs[@]} -gt 0 ]]; then
+    printf "\n${CYAN}Install ${GREEN}${npm_pkgs[@]}\n"
+    npm install ${npm_pkgs[@]}
+  fi
+
+  git add package.json package-lock.json
+  git commit -m "Install ${#npm_pkgs[@]} npm packages"
+
+  printf "\n${CYAN}Done!${COLORRESET}\n"
+
+  code .
+  npm start
 
   exec bash
 

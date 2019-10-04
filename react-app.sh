@@ -11,7 +11,7 @@ npm_pkgs=()
 
 syntax_note() {
   printf "Please specify the project name: 
-  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-t] [-b] [-m] \n"
+  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-t] [-b] [-m] [-s]\n"
 }
 
 install_modules() {
@@ -71,6 +71,7 @@ else
     -t) npm_pkgs+=('react-meta-tags') ;;
     -b) npm_pkgs+=('react-bootstrap') ;;
     -m) npm_pkgs+=('@material-ui/core') ;;
+    -s) npm_pkgs+=('styled-components') ;;
     !(-)) project_dir=$i;
     esac
   done

@@ -17,9 +17,6 @@ syntax_note() {
 install_modules() {
   printf "\n${CYAN}Install React App ...${COLORRESET}\n"
   npx create-react-app $1
-
-  printf "\n${CYAN}Install node-sass ...${COLORRESET}\n"
-  npm i node-sass --prefix $project_dir/
 }
 
 customize_react_app() {
@@ -67,6 +64,7 @@ if [[ $# -lt 1 ]]; then
 else
   for i in $@; do
     case $i in
+    -n) npm_pkgs+=('node-sass') ;;
     -r) npm_pkgs+=('react-router-dom') ;;
     -s) npm_pkgs+=('styled-components') ;;
     !(-)) project_dir=$i;
@@ -81,9 +79,7 @@ else
 
   git init
   git add .
-  git commit -m "Init React project" -m "Install modules:
-- npm i create-react-app
-- npm i node-sass (to use scss)
+  git commit -m "Init React project" -m "Install create-react-app
 
 Customize React App:
 - Create two folders in src: components/ and assets/ respectively assets/scss/

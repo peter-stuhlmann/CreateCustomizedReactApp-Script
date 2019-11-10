@@ -11,7 +11,7 @@ npm_pkgs=()
 
 syntax_note() {
   printf "Please specify the project name: 
-  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-t] [-b] [-m] [-s]\n"
+  ${CYAN}react-app ${GREEN}<project-name> ${COLORRESET}[-r] [-s]\n"
 }
 
 install_modules() {
@@ -68,9 +68,6 @@ else
   for i in $@; do
     case $i in
     -r) npm_pkgs+=('react-router-dom') ;;
-    -t) npm_pkgs+=('react-meta-tags') ;;
-    -b) npm_pkgs+=('react-bootstrap') ;;
-    -m) npm_pkgs+=('@material-ui/core') ;;
     -s) npm_pkgs+=('styled-components') ;;
     !(-)) project_dir=$i;
     esac

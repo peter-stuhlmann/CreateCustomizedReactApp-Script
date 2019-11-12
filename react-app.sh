@@ -43,32 +43,26 @@ customize_react_app() {
   rm -rf .git
 
   # Create folders
-  mkdir src/components/ src/assets/ src/assets/scss/ src/assets/img/
+  mkdir src/components/ src/assets/ src/assets/img/ .vscode/
   
   # Create files 
-  touch src/assets/scss/main.scss src/index.js src/components/App.js 
+  touch src/index.js src/App.js .eslintrc.json .prettierrc .vscode/settings.json
 
   # Write default code in files
 
-  echo 'import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App";
+  echo "import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-ReactDOM.render(<App />, document.querySelector("#root"));' >>src/index.js
+ReactDOM.render(<App />, document.querySelector('#root'));" >>src/index.js
 
-  echo 'import React, { Component, Fragment } from "react";
+  echo "import React, { Fragment } from 'react';
 
-export default class App extends Component {
-  render() {
-    return ( 
-      <Fragment>
-        Hello World!
-      </Fragment>
-    )
-  }
-}' >>src/components/App.js
+export default function App() {
+  return <Fragment>Hello World!</Fragment>;
+}" >>src/App.js
 
-echo '{
+  echo '{
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "plugins": ["react-hooks"],
   "parser": "babel-eslint",
@@ -261,6 +255,23 @@ echo '{
     "react/void-dom-elements-no-children": 2
   }
 }' >>.eslintrc.json
+
+  echo '{
+  "singleQuote": true,
+  "trailingComma": "es5"
+}' >>.prettierrc
+
+  echo '{
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ],
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
+  "editor.formatOnSave": true
+}' >>.vscode/settings.json
 }
 
 if [[ $# -lt 1 ]]; then
